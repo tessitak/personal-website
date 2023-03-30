@@ -76,4 +76,9 @@ body, html {
     justify-content: center;
     align-items: top;
     gap: 40px;
+    padding-top: 20px;   
+}
+
+img {
+    height: 30px;
 }
