@@ -88,7 +88,11 @@ img {
     transition: all 0.3s ease-in-out;
 }
 
-@media screen and (max-device-width: 850px), (max-width: 850px) {
+@media screen and (max-device-width: 850px), (max-width: 850px), (orientation: portrait){
+    .background{
+        background: linear-gradient(to bottom, #FFFFFF, #f2d9dc);
+    }
+
     .hello {
         font-size: 150px;
         position: absolute;
@@ -104,6 +108,21 @@ img {
     }
     .icons {
         padding: 0;  
+    }
+}
+
+@media screen and (max-device-width: 850px), (max-width: 850px), (orientation: landscape) {
+    .content {
+        height: 80%;
+    }
+    .hello {
+        font-size: 150px;
+        position: absolute;
+        bottom: 55px;
+    }
+    .text {
+        padding: 20px;
+        width: 50%;
     }
 }
 
