@@ -38,8 +38,6 @@ body, html {
 }
 /*End background blur*/
 
-
-
 .content {
     display: flex;
     flex-direction: column;
@@ -89,3 +87,23 @@ img {
     transform: scale(1.2);
     transition: all 0.3s ease-in-out;
 }
+
+@media screen and (max-device-width: 850px), (max-width: 850px) {
+    .hello {
+        font-size: 150px;
+        position: absolute;
+        bottom: 80px;
+    }
+    .content {
+        height: 70%;
+        position: relative;
+    }
+    .text {
+        padding: 20px;
+        width: 60%;
+    }
+    .icons {
+        padding: 0;  
+    }
+}
+
