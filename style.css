@@ -38,6 +38,8 @@ body, html {
 }
 /*End background blur*/
 
+
+
 .content {
     display: flex;
     flex-direction: column;
@@ -81,4 +83,8 @@ body, html {
 
 img {
     height: 30px;
+}
+
+img:hover {
+  filter: hue-rotate(180deg);
 }
