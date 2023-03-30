@@ -88,7 +88,23 @@ img {
     transition: all 0.3s ease-in-out;
 }
 
-@media screen and (max-device-width: 850px), (max-width: 850px), (orientation: portrait){
+@media screen and (max-device-width: 850px), (max-width: 850px) and (orientation: landscape) {
+    .content {
+        height: 80%;
+        position: relative;
+    }
+    .hello {
+        font-size: 150px;
+        position: absolute;
+        bottom: 55px;
+    }
+    .text {
+        padding: 20px;
+        width: 50%;
+    }
+}
+
+@media screen and (max-device-width: 600px), (max-width: 600px) and (orientation: portrait){
     .background{
         background: linear-gradient(to bottom, #FFFFFF, #f2d9dc);
     }
@@ -111,18 +127,5 @@ img {
     }
 }
 
-@media screen and (max-device-width: 850px), (max-width: 850px), (orientation: landscape) {
-    .content {
-        height: 80%;
-    }
-    .hello {
-        font-size: 150px;
-        position: absolute;
-        bottom: 55px;
-    }
-    .text {
-        padding: 20px;
-        width: 50%;
-    }
-}
+
 
