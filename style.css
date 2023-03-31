@@ -87,7 +87,7 @@ img {
     transform: scale(1.2);
     transition: all 0.3s ease-in-out;
 }
-/*
+
 @media screen and (max-device-width: 850px), (max-width: 850px) and (orientation: landscape) {
     .content {
         height: 80%;
@@ -102,21 +102,7 @@ img {
         padding: 20px;
         width: 50%;
     }
-}*/
-
-@media screen and (orientation: landscape) {
-  html {
-    transform: rotate(90deg);
-    transform-origin: center;
-    width: 100vh;
-    height: 100vw;
-    overflow-x: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
 }
-
 
 @media screen and (max-device-width: 600px), (max-width: 600px) and (orientation: portrait){
     .background{
