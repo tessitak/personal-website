@@ -4,24 +4,24 @@ module.exports = async function handler(req, res) {
   }
 
   const { event_source_url, event_id } = req.body;
-
   const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress;
-  const userAgent = req.headers['user-agent'] || '';
 
   const payload = {
-    capi_connection_id: process.env.SPOTIFY_CONNECTION_ID,
-    events: [
-      {
-        event_id: event_id,
-        event_name: 'CUSTOM_EVENT_1', // used for page views
-        event_time: new Date().toISOString(), // RFC 3339 format
-        event_source_url: event_source_url,
-        action_source: 'WEB',
-        user_data: {
-          ip_address: ip,
+    conversion_events: {
+      capi_connection_id: process.env.SPOTIFY_CONNECTION_ID,
+      events: [
+        {
+          event_id: event_id,
+          event_name: 'CUSTOM_EVENT_1',
+          event_time: new Date().toISOString(),
+          event_source_url: event_source_url,
+          action_source: 'WEB',
+          user_data: {
+            ip_address: ip,
+          },
         },
-      },
-    ],
+      ],
+    },
   };
 
   try {
@@ -46,6 +46,5 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     console.error('Spotify CAPI error:', err.message, err.cause);
     return res.status(500).json({ error: err.message, cause: String(err.cause) });
-    console.log('Token preview:', process.env.SPOTIFY_AUTH_TOKEN?.slice(0, 10) + '...' + process.env.SPOTIFY_AUTH_TOKEN?.slice(-5));
   }
 };
