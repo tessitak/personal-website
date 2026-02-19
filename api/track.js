@@ -18,6 +18,7 @@ module.exports = async function handler(req, res) {
           action_source: 'WEB',
           user_data: {
             ip_address: ip,
+            user_agent: req.headers['user-agent'] || '',
           },
         },
       ],
