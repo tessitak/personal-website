@@ -31,6 +31,9 @@ module.exports = async function handler(req, res) {
   };
 
   try {
+    console.log('Connection ID:', process.env.SPOTIFY_CONNECTION_ID ? 'set' : 'MISSING');
+    console.log('Auth Token:', process.env.SPOTIFY_AUTH_TOKEN ? 'set' : 'MISSING');
+    
     const response = await fetch(
       `https://ads-api.spotify.com/conversions/v1/${process.env.SPOTIFY_CONNECTION_ID}/events`,
       {
@@ -47,7 +50,7 @@ module.exports = async function handler(req, res) {
     console.log('Spotify CAPI response:', response.status, JSON.stringify(data));
     return res.status(response.status).json(data);
   } catch (err) {
-    console.error('Spotify CAPI error:', err.message);
-    return res.status(500).json({ error: err.message });
+    console.error('Spotify CAPI error:', err.message, err.cause);
+    return res.status(500).json({ error: err.message, cause: String(err.cause) });
   }
 };
