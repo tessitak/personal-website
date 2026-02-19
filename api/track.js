@@ -46,5 +46,6 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     console.error('Spotify CAPI error:', err.message, err.cause);
     return res.status(500).json({ error: err.message, cause: String(err.cause) });
+    console.log('Token preview:', process.env.SPOTIFY_AUTH_TOKEN?.slice(0, 10) + '...' + process.env.SPOTIFY_AUTH_TOKEN?.slice(-5));
   }
 };
