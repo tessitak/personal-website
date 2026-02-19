@@ -5,26 +5,20 @@ module.exports = async function handler(req, res) {
 
   const { event_source_url, event_id } = req.body;
 
-  const cookies = Object.fromEntries(
-    (req.headers.cookie || '').split('; ').filter(Boolean).map(c => c.split('='))
-  );
-  const spdt = cookies['spdt'] || null;
-
   const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress;
   const userAgent = req.headers['user-agent'] || '';
 
   const payload = {
-    data: [
+    capi_connection_id: process.env.SPOTIFY_CONNECTION_ID,
+    events: [
       {
-        event_name: 'PageView',
-        event_time: Math.floor(Date.now() / 1000),
         event_id: event_id,
-        action_source: 'website',
+        event_name: 'CUSTOM_EVENT_1', // used for page views
+        event_time: new Date().toISOString(), // RFC 3339 format
         event_source_url: event_source_url,
+        action_source: 'WEB',
         user_data: {
-          client_ip_address: ip,
-          client_user_agent: userAgent,
-          ...(spdt && { spdt }),
+          ip_address: ip,
         },
       },
     ],
@@ -33,9 +27,9 @@ module.exports = async function handler(req, res) {
   try {
     console.log('Connection ID:', process.env.SPOTIFY_CONNECTION_ID ? 'set' : 'MISSING');
     console.log('Auth Token:', process.env.SPOTIFY_AUTH_TOKEN ? 'set' : 'MISSING');
-    
+
     const response = await fetch(
-      `https://ads-api.spotify.com/conversions/v1/${process.env.SPOTIFY_CONNECTION_ID}/events`,
+      'https://capi.spotify.com/capi-direct/events/',
       {
         method: 'POST',
         headers: {
