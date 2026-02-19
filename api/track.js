@@ -1,20 +1,16 @@
-// api/track.js
-
-export default async function handler(req, res) {
-  // Only allow POST
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { event_source_url, event_id } = req.body;
 
-  // Read the Spotify pixel cookie (spdt) from the browser request
   const cookies = Object.fromEntries(
-    (req.headers.cookie || '').split('; ').map(c => c.split('='))
+    (req.headers.cookie || '').split('; ').filter(Boolean).map(c => c.split('='))
   );
   const spdt = cookies['spdt'] || null;
 
-  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress;
   const userAgent = req.headers['user-agent'] || '';
 
   const payload = {
@@ -22,7 +18,7 @@ export default async function handler(req, res) {
       {
         event_name: 'PageView',
         event_time: Math.floor(Date.now() / 1000),
-        event_id: event_id, // for deduplication with the pixel
+        event_id: event_id,
         action_source: 'website',
         event_source_url: event_source_url,
         user_data: {
@@ -48,8 +44,10 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
+    console.log('Spotify CAPI response:', response.status, JSON.stringify(data));
     return res.status(response.status).json(data);
   } catch (err) {
-    return res.status(500).json({ error: 'Failed to send event' });
+    console.error('Spotify CAPI error:', err.message);
+    return res.status(500).json({ error: err.message });
   }
-}
+};
