@@ -28,6 +28,27 @@
 	    w.spdt('view');
 	  })(window, document);
 	</script>
+
+	<script>
+  (function() {
+    // Generate a unique ID for this page view event
+    const eventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+    // Tell your pixel about this event_id
+    // (Add event_id to however your pixel fires — check Spotify's pixel docs for the param name)
+
+    // Fire the S2S call
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // important — sends cookies to your own domain
+      body: JSON.stringify({
+        event_source_url: window.location.href,
+        event_id: eventId,
+      }),
+    });
+  })();
+</script>
 	
 </head>
 <body>
