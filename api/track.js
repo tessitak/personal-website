@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
       events: [
         {
           event_id: event_id,
-          event_name: 'PAGE_VIEW',
+          event_name: 'VIEW',
           event_time: new Date().toISOString(),
           event_source_url: event_source_url,
           action_source: 'WEB',
